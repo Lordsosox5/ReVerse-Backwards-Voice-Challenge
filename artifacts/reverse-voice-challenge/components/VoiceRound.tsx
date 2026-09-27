@@ -9,6 +9,7 @@ import { useColors } from '@/hooks/useColors';
 import { BounceButton, Confetti, IconButton, Waveform } from '@/components/GameUI';
 import { useGame } from '@/components/GameContext';
 import { reversePrompt } from '@/data/gameData';
+import { playReversedRecording } from '@/utils/reverseAudio';
 
 type Phase = 'ready' | 'recording' | 'results';
 
@@ -72,6 +73,10 @@ export default function VoiceRound({ phrase, levelId, onboarding = false, mode, 
   };
 
   const playBackwards = async () => {
+    if (recordingUri) {
+      const played = await playReversedRecording(recordingUri);
+      if (played) return;
+    }
     speakBackwards();
   };
 

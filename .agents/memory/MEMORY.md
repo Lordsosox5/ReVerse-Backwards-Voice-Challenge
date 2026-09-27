@@ -1,1 +1,2 @@
 - [Expo audio compatibility](expo-audio.md) — newer SDKs warn on expo-av; isolate recording/playback for a future expo-audio migration.
+- [Native audio reversal](native-audio-reversal.md) — true local M4A reversal needs a custom Expo native build; keep a safe preview fallback.

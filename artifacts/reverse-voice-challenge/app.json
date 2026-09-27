@@ -14,7 +14,7 @@
     "web": {
       "favicon": "./assets/images/icon.png"
     },
-    "plugins": ["expo-router"],
+    "plugins": ["expo-router", "react-native-audio-api"],
     "experiments": {
       "typedRoutes": true,
       "reactCompiler": true

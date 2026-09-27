@@ -57,6 +57,7 @@
   "dependencies": {
     "expo-av": "^16.0.8",
     "expo-speech": "^57.0.3",
-    "lottie-react-native": "^7.5.0"
+    "lottie-react-native": "^7.5.0",
+    "react-native-audio-api": "0.13.6"
   }
 }
