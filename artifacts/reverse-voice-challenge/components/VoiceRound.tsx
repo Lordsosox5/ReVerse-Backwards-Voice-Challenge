@@ -21,6 +21,7 @@ export default function VoiceRound({ phrase, levelId, onboarding = false, mode, 
   const [score, setScore] = useState(0);
   const [recordingUri, setRecordingUri] = useState<string | null>(null);
   const [error, setError] = useState('');
+  const [isListening, setIsListening] = useState(false);
   const recordingRef = useRef<Audio.Recording | null>(null);
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const scoreAnim = useRef(new Animated.Value(0)).current;
@@ -71,7 +72,19 @@ export default function VoiceRound({ phrase, levelId, onboarding = false, mode, 
   };
 
   const playBackwards = async () => {
-    Speech.speak(reversePrompt(phrase), { rate: 0.65, pitch: 1.05 });
+    speakBackwards();
+  };
+
+  const speakBackwards = () => {
+    setIsListening(true);
+    Speech.stop();
+    Speech.speak(reversePrompt(phrase), {
+      rate: 0.58,
+      pitch: 1.05,
+      onDone: () => setIsListening(false),
+      onStopped: () => setIsListening(false),
+      onError: () => setIsListening(false),
+    });
   };
 
   if (phase === 'results') {
@@ -99,7 +112,7 @@ export default function VoiceRound({ phrase, levelId, onboarding = false, mode, 
         <Text style={[styles.challengeTitle, { color: mode === 'live' ? colors.paper : colors.navy }]}>Listen. Flip. Speak.</Text>
         <Text style={[styles.challengeCopy, { color: mode === 'live' ? 'rgba(255,255,255,0.65)' : colors.mutedForeground }]}>The word is hidden. Your ears know the way.</Text>
         <View style={[styles.targetCard, { backgroundColor: mode === 'live' ? colors.coral : colors.sky, borderColor: mode === 'live' ? colors.paper : colors.navy }]}><View style={styles.cardTop}><Text style={[styles.targetEyebrow, { color: mode === 'live' ? colors.paper : colors.navy }]}>TARGET WORD</Text><Feather name="eye-off" size={18} color={mode === 'live' ? colors.paper : colors.navy} /></View><Text style={[styles.targetQuestion, { color: mode === 'live' ? colors.paper : colors.navy }]}>{phrase.length > 12 ? '?????' : '?'}</Text><Text style={[styles.targetHint, { color: mode === 'live' ? colors.paper : colors.navy }]}>Keep it secret</Text></View>
-        <Pressable testID="listen-prompt" onPress={() => Speech.speak(reversePrompt(phrase), { rate: 0.65, pitch: 1.05 })} style={styles.listenRow}><Feather name="headphones" size={17} color={mode === 'live' ? colors.yellow : colors.coral} /><Text style={[styles.listenText, { color: mode === 'live' ? 'rgba(255,255,255,0.75)' : colors.mutedForeground }]}>Tap to hear the backwards prompt</Text><Feather name="play" size={13} color={mode === 'live' ? colors.yellow : colors.coral} /></Pressable>
+        <Pressable testID="listen-prompt" onPress={speakBackwards} style={[styles.listenRow, isListening && { backgroundColor: mode === 'live' ? 'rgba(255,217,90,0.14)' : colors.secondary }]}><Feather name="headphones" size={17} color={mode === 'live' ? colors.yellow : colors.coral} /><Text style={[styles.listenText, { color: mode === 'live' ? 'rgba(255,255,255,0.75)' : colors.mutedForeground }]}>{isListening ? 'Playing backwards audio…' : 'Tap to hear the backwards prompt'}</Text><Feather name={isListening ? 'volume-2' : 'play'} size={13} color={mode === 'live' ? colors.yellow : colors.coral} /></Pressable>
         <Waveform active={phase === 'recording'} />
         <View style={styles.micArea}><Pressable testID="record-button" onPress={phase === 'recording' ? stopRecording : startRecording} style={[styles.micButton, { backgroundColor: phase === 'recording' ? colors.coral : colors.yellow, borderColor: colors.navy }]}><Feather name={phase === 'recording' ? 'square' : 'mic'} size={38} color={colors.navy} /></Pressable><Text style={[styles.micLabel, { color: mode === 'live' ? colors.paper : colors.navy }]}>{phase === 'recording' ? 'Tap to finish' : 'Tap to record'}</Text></View>
         {error ? <Text style={styles.error}>{error}</Text> : null}

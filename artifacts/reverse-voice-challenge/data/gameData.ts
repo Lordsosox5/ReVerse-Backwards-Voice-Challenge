@@ -24,5 +24,5 @@ export const reversePrompt = (phrase: string) =>
   phrase
     .trim()
     .split(/\s+/)
-    .reverse()
+    .map((word) => [...word].reverse().join(''))
     .join(' ');
