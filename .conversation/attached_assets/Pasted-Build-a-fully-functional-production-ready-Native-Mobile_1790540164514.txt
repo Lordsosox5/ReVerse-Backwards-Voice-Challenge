@@ -1,0 +1,52 @@
+Build a fully functional, production-ready Native Mobile App using React Native and Expo for a viral voice-reversing game named "ReVerse: The Backwards Voice Challenge". DO NOT build a web application—this must be a pure native iOS/Android mobile project.
+
+### Design Aesthetic & Game-Juice (Gamified UI/UX):
+- The app MUST feel like a playful, highly polished mobile game (think Duolingo, Kahoot!, or Voodoo hypercasual games), not a utility tool.
+- STRICTLY NO neon colors. Use a vibrant, high-contrast, flat color palette (e.g., bright yellows, soft sky blues, bold reds, clean whites).
+- Typography: Use bold, rounded, playful fonts (e.g., Fredoka or Nunito style) with slight drop shadows for a 3D button effect.
+- Game Juice & Animations: Buttons must have bouncy scale/spring animations when pressed. Use screen-shakes on a bad score, confetti particle effects on a high score, and dynamic rolling-number animations for the score counter. 
+- UI Sound Design: Include playful UI sound effects for tapping buttons, success chimes, failure buzzers, and a ticking clock sound for timed modes.
+
+### Core Architecture & Native Tech Stack:
+1. Native Stack: React Native, Expo (`expo-av`, `expo-speech`, `expo-splash-screen`, `expo-file-system`, `expo-haptics`), React Navigation (`@react-navigation/native`, `@react-navigation/bottom-tabs`), `react-native-reanimated` (for bouncy game physics/animations), `lottie-react-native` (for victory/fail animations), and `lucide-react-native`.
+2. Native Audio Engine:
+   - Handle OS-level microphone permissions (`Audio.requestPermissionsAsync()`).
+   - Record microphone audio using `expo-av` with live audio metering.
+   - Process recorded audio files locally to play backward in-memory.
+   - Synthesize puzzle words using `expo-speech` and reverse the audio output.
+
+### App Flow & Navigation:
+1. Splash Screen: Native splash screen using `expo-splash-screen` featuring a bouncy, animated game mascot or logo.
+2. Gamified Onboarding (First-time users):
+   - Interactive tutorial: The app forces the user to play one dummy level ("Apple") before unlocking the main menu, complete with XP bars and "Level Up!" animations.
+3. Bottom Main Menu (Tab Navigation): 
+   - Tabs: [Solo], [Custom], [Live], [Settings].
+
+### Game Modes & Features:
+1. Solo Campaign (Solo Tab): 
+   - UI presented as a "Level Map" (Candy Crush style) showing locked and unlocked stages. Earning 3 stars on a level unlocks the next.
+2. Custom Challenge Mode (Custom Tab): 
+   - Users can type any custom text (word or phrase) into an input field.
+   - Upon submitting, the text is immediately masked (e.g., replaced with bouncy '?' blocks).
+   - The app synthesizes the typed text, reverses the audio, and sets it as the active puzzle.
+3. TikTok Live Streamer Mode (Live Tab): 
+   - Optimized for broadcasting. Streamers type words suggested by Live Chat, hide them, and try to mimic the reversed audio.
+   - UI is shifted to leave a dedicated "Camera Overlay Safe Zone" at the top/bottom for the face cam.
+   - Extra-large, bold typography and massive visual cues (Huge green checkmarks or red X's) so viewers on small phone screens can easily read the stream.
+
+### Gameplay Screen UX (The "Game" Feel):
+- Target Display: Shown as a physical-looking "card" that flips over dynamically to reveal the word.
+- Visualizer: A bouncy, blob-like or colorful bar-chart waveform that reacts aggressively to the volume of the user's voice.
+- Big Mic Button: A massive, inviting, squishy-looking button. Press/Hold to record, with a shrinking ring animation showing the time limit.
+- Reveal Sequence: Dramatic drum-roll audio effect followed by the reversed recording playing back.
+- Gamified Results Modal: 
+  - Dynamic score counter rolling up from 0% to the final accuracy percentage.
+  - Stamp animation slamming down on the screen with text like "PERFECT!", "NICE TRY!", or "EPIC FAIL!".
+  - Native "Share" button and "Next Level" button.
+
+### Pre-loaded English Phrases Dataset (For Solo Mode):
+- Level 1: Penguin, Astronaut, Watermelon, Pineapple.
+- Level 2: She sells seashells, Fuzzy Wuzzy was a bear, I scream for ice cream.
+- Level 3: How much wood would a woodchuck chuck, Irish wristwatch, Pad kid poured curd pulled cod.
+
+Ensure all UI components use `SafeAreaView`. Focus heavily on smooth 60fps animations, intuitive game navigation, typing input handling, and flawless local audio processing.

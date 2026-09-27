@@ -1,0 +1,1 @@
+- [Expo audio compatibility](expo-audio.md) — newer SDKs warn on expo-av; isolate recording/playback for a future expo-audio migration.

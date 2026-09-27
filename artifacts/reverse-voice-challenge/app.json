@@ -1,0 +1,23 @@
+{
+  "expo": {
+    "name": "ReVerse: Backwards Voice Challenge",
+    "slug": "reverse-voice-challenge",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/images/reverse-icon.png",
+    "scheme": "reverse-voice-challenge",
+    "userInterfaceStyle": "automatic",
+    "ios": {
+      "supportsTablet": false
+    },
+    "android": {},
+    "web": {
+      "favicon": "./assets/images/icon.png"
+    },
+    "plugins": ["expo-router"],
+    "experiments": {
+      "typedRoutes": true,
+      "reactCompiler": true
+    }
+  }
+}
